@@ -70,12 +70,12 @@
   BOARD_USE_64BITMEDIA := false
 
 # Some framework code requires this to enable BT
-BOARD_HAVE_BLUETOOTH := true
-BOARD_USES_WIPOWER := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/bluetooth
-BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_HAS_QCA_BT_ROME := true
-WCNSS_FILTER_USES_SIBS := true
+ BOARD_HAVE_BLUETOOTH := true
+ BOARD_USES_WIPOWER := true
+ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/bluetooth
+ BOARD_HAVE_BLUETOOTH_QCOM := true
+ BOARD_HAS_QCA_BT_ROME := true
+ WCNSS_FILTER_USES_SIBS := true
 
 # Boot animation
   TARGET_BOOTANIMATION_HALF_RES := true
@@ -132,6 +132,7 @@ WCNSS_FILTER_USES_SIBS := true
 # Kernel
   BOARD_KERNEL_BASE := 0x80000000
   BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff 
+  BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
   BOARD_KERNEL_PAGESIZE := 4096
   BOARD_KERNEL_TAGS_OFFSET := 0x00000100
   BOARD_RAMDISK_OFFSET     := 0x01000000
@@ -141,7 +142,7 @@ WCNSS_FILTER_USES_SIBS := true
   TARGET_KERNEL_HEADER_ARCH := arm64
   TARGET_KERNEL_SOURCE := kernel/zte/msm8996
   TARGET_KERNEL_CONFIG := lineageos_axon7_defconfig
-  TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+  KERNEL_TOOLCHAIN_PREFIX :=$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.2/bin/aarch64-linux-android-
 
 # Keystore
   TARGET_PROVIDES_KEYMASTER := true
