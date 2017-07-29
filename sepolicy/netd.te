@@ -1,1 +1,1 @@
-allow netd persist_file:dir {read open};
+allow netd persist_file:file {read open};
