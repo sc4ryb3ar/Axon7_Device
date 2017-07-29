@@ -1,0 +1,2 @@
+allow audioserver i2c_device:chr_file {read write};
+allow audioserver i2c_device:chr_file {open ioctl};

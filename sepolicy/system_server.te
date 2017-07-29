@@ -5,3 +5,7 @@ allow system_server proc_touchscreen:file rw_file_perms;
 # Allow system server access to gx_fpd daemon
 binder_call(system_server, gx_fpd);
 allow system_server gx_fpd_service:service_manager find;
+
+allow systen_server adbsecure_prop:file {read};
+allow system_server adbsecure_prop:file {open getattr};
+allow system_server unlabeled:file {unlink};
