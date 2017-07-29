@@ -1,13 +1,8 @@
-IS_ARM64 := true
-
-# Include Official OTA Package
-WITH_OFFICIALOTA := true
-
 # Get the long list of APNs
 PRODUCT_COPY_FILES := device/zte/axon7/apns-full-conf.xml:system/etc/apns-conf.xml
 
 # Include pure telephony configuration
-$(call inherit-product, vendor/pure/configs/pure_phone.mk)
+$(call inherit-product, vendor/aosp/common.mk)
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
