@@ -1,5 +1,3 @@
-import /init.spectrum.rc
-
 on init
     # Create Power HAL tunables
     mkdir /dev/voxpopuli 0555 system system
