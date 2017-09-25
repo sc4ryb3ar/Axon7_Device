@@ -53,6 +53,9 @@ on init
 
     write sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
+    # Camera shims
+    export LD_SHIM_LIBS "/system/lib/hw/camera.msm8996.so|/system/lib/libshim_camera.so:/system/vendor/lib/libmmcamera_ppeiscore.so|/system/lib/libshim_camera.so"
+
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
