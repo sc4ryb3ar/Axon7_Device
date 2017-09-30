@@ -188,9 +188,9 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service
 
-# Fingerprintd
+# Fingerprint
 PRODUCT_PACKAGES += \
-    fingerprintd
+    android.hardware.biometrics.fingerprint@2.0-service
 
 # Flip Cover App
 PRODUCT_PACKAGES += \
