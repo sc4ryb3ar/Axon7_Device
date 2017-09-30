@@ -160,6 +160,9 @@ endif
 TARGET_NO_RPC := true
 USE_DEVICE_SPECIFIC_GPS := true
 
+# HIDL
+DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
+
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_axon7
 TARGET_RECOVERY_DEVICE_MODULES := libinit_axon7
