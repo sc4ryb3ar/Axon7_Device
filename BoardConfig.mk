@@ -164,8 +164,6 @@
   PROTOBUF_SUPPORTED := true
   TARGET_USE_SDCLANG := true
 
-  BOARD_RIL_CLASS := ../../../device/zte/axon7/ril/
-
 # DexOpt - Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
 ifeq ($(TARGET_BUILD_VARIANT),user)
