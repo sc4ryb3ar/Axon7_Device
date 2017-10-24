@@ -69,18 +69,19 @@
   USE_CUSTOM_AUDIO_POLICY := 1
   BOARD_USE_64BITMEDIA := false
 
-# Some framework code requires this to enable BT
-BOARD_HAVE_BLUETOOTH := true
-BOARD_USES_WIPOWER := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/bluetooth
-BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_HAS_QCA_BT_ROME := true
-WCNSS_FILTER_USES_SIBS := true
+# Bluetooth
+  BOARD_HAVE_BLUETOOTH := true
+  BOARD_USES_WIPOWER := true
+  BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
+  BOARD_HAVE_BLUETOOTH_QCOM := true
+  BOARD_HAS_QCA_BT_ROME := true
+  WCNSS_FILTER_USES_SIBS := true
 
 # Boot animation
-  TARGET_BOOTANIMATION_HALF_RES := false
   TARGET_BOOTANIMATION_PRELOAD := true
   TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+  TARGET_SCREEN_HEIGHT := 2560
+  TARGET_SCREEN_WIDTH := 1440
 
 # BootLoader
   TARGET_BOOTLOADER_BOARD_NAME := ailsa_ii
@@ -89,6 +90,8 @@ WCNSS_FILTER_USES_SIBS := true
 # Camera
   TARGET_USES_MEDIA_EXTENSIONS := true
   TARGET_CAMERASERVICE_CLOSES_NATIVE_HANDLES := true
+  TARGET_USES_GOOGLE_CAMERA := true
+  TARGET_USES_OP_CAMERA := false
 
 # Charger
   BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
@@ -98,15 +101,6 @@ WCNSS_FILTER_USES_SIBS := true
 
 # Crypto
   TARGET_HW_DISK_ENCRYPTION := true
-
-#  ifeq ($(HOST_OS),linux)
-#   ifeq ($(TARGET_BUILD_VARIANT),user)
-#      ifeq ($(WITH_DEXPREOPT),)
-#        WITH_DEXPREOPT := true
-#        WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
-#      endif
-#    endif
-#  endif
 
 # Display
   MAX_EGL_CACHE_KEY_SIZE := 12*1024
@@ -141,7 +135,7 @@ WCNSS_FILTER_USES_SIBS := true
   TARGET_KERNEL_ARCH := arm64
   TARGET_KERNEL_HEADER_ARCH := arm64
   TARGET_KERNEL_SOURCE := kernel/zte/msm8996
-  TARGET_KERNEL_CONFIG := lineageos_axon7_defconfig
+  TARGET_KERNEL_CONFIG := axon_defconfig
   TARGET_KERNEL_HAVE_EXFAT := true
   TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
@@ -155,34 +149,44 @@ WCNSS_FILTER_USES_SIBS := true
   BOARD_NFC_CHIPSET := pn548
   TARGET_USES_NQ_NFC := true
 
-# Enable dex-preoptimization to speed up first boot sequence
-WITH_DEXPREOPT := true
-
 # PowerHAL
-TARGET_POWERHAL_VARIANT := voxpopuli
-TARGET_USES_INTERACTION_BOOST := true
--include device/voxpopuli/sepolicy/sepolicy.mk
+  TARGET_POWERHAL_VARIANT := voxpopuli
+  TARGET_USES_INTERACTION_BOOST := true
+  -include device/voxpopuli/sepolicy/sepolicy.mk
 
 # Properties
   TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
 
-# Qualcomm support
+# RIL - Qualcomm support
   BOARD_USES_QCOM_HARDWARE := true
   BOARD_USES_QC_TIME_SERVICES := true
 #  TARGET_RIL_VARIANT := caf
-   PROTOBUF_SUPPORTED := true
-   TARGET_USE_SDCLANG := true
+  PROTOBUF_SUPPORTED := true
+  TARGET_USE_SDCLANG := true
+
+  BOARD_RIL_CLASS := ../../../device/zte/axon7/ril/
+
+# DexOpt - Enable dex-preoptimization to speed up first boot sequence
+ifeq ($(HOST_OS),linux)
+ifeq ($(TARGET_BUILD_VARIANT),user)
+ifeq ($(WITH_DEXPREOPT),)
+WITH_DEXPREOPT := true
+endif
+endif
+endif
+WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
+DONT_DEXPREOPT_PREBUILTS := true
 
 # Recovery
-  TARGET_RECOVERY_FSTAB := device/zte/axon7/rootdir/etc/fstab.qcom
+  TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
   TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_axon7
-  TARGET_RELEASETOOLS_EXTENSIONS := device/zte/axon7
+  TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)/releasetools
 
 # Sensors
   USE_SENSOR_MULTI_HAL := true
 
 # Sepolicy (SeLinux)
-  BOARD_SEPOLICY_DIRS += device/zte/axon7/sepolicy
+  BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
   include device/qcom/sepolicy/sepolicy.mk
 
 # TWRP
@@ -214,7 +218,6 @@ TARGET_USES_INTERACTION_BOOST := true
   WPA_SUPPLICANT_VERSION := VER_0_8_X
 
   # EAS
-  ENABLE_CPUSETS := true
   ENABLE_SCHEDBOOST := true
 
 # inherit from the proprietary version

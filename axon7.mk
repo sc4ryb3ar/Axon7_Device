@@ -1,18 +1,18 @@
-#
-# Copyright (C) 2016 The CyanogenMod Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+
+IS_ARM64 := true
+
+# Include Official OTA Package
+WITH_OFFICIALOTA := true
+
+# Support Beta OTA Opt-in (Requires additional ota xml)
+BETA_OTA := true
+
+# Get the long list of APNs
+PRODUCT_COPY_FILES := $(LOCAL_PATH)/apns-conf.xml:system/etc/apns-conf.xml
+
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -55,9 +55,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/mixer_paths_i2s.xml:system/etc/mixer_paths_tasha_i2s.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9330.xml:system/etc/sound_trigger_mixer_paths_wcd9330.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml
-
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
     frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml \
     frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/system/etc/a2dp_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/system/etc/audio_policy_volumes.xml \
@@ -67,28 +65,27 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
+		frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml
 
-# Boot Animation
-TARGET_SCREEN_HEIGHT := 2560
-TARGET_SCREEN_WIDTH := 1440
-# TARGET_BOOTANIMATION_HALF_RES := true
+# Busybox v1.26.2-Stericson
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/busybox:system/xbin/busybox
 
 # Camera
 PRODUCT_PACKAGES += \
     libshim_camera \
 
-TARGET_USES_GOOGLE_CAMERA := true
-TARGET_USES_OP_CAMERA := true
-TARGET_USES_SNAP_CAMERA := true
-
-
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+		frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
+		frameworks/native/data/etc/android.hardware.camera.external.xml:system/etc/permissions/android.hardware.camera.external.xml \
+		frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+		frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
 		frameworks/native/data/etc/android.hardware.camera.full.xml:system/etc/permissions/android.hardware.camera.full.xml \
-	 	frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml
+		frameworks/native/data/etc/android.hardware.camera.manual_postprocessing.xml:system/etc/permissions/android.hardware.camera.manual_postprocessing.xml \
+		frameworks/native/data/etc/android.hardware.camera.manual_sensor.xml:system/etc/permissions/android.hardware.camera.manual_sensor.xml \
+		frameworks/native/data/etc/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
+		frameworks/native/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -99,6 +96,11 @@ PRODUCT_PACKAGES += \
     cneapiclient \
     com.quicinc.cne \
     services-ext
+
+# Dex2oat Hacks
+PRODUCT_PROPERTY_OVERRIDES += \
+		dalvik.vm.dex2oat-swap=false \
+		dalvik.vm.dex2oat-flags=--no-watch-dog
 
 # Display
 PRODUCT_AAPT_CONFIG := normal
@@ -117,7 +119,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level-0.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version-1_0_3.xml
-
 
 $(call inherit-product, frameworks/native/build/phone-xxxhdpi-4096-hwui-memory.mk)
 
@@ -278,7 +279,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/synaptics_dsx.idc:system/usr/idc/synaptics_dsx.idc \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
-
 # Wifi
 PRODUCT_PACKAGES += \
     ipacm \
@@ -297,9 +297,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wcnss/hostapd.deny:system/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/wcnss/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wcnss/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-    $(LOCAL_PATH)/wcnss/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
-
-PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/wcnss/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml
 
@@ -307,5 +305,19 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vr.high_performance.xml:system/etc/permissions/android.hardware.vr.high_performance.xml
 
-
 $(call inherit-product-if-exists, vendor/zte/axon7/axon7-vendor.mk)
+
+# Include pure telephony configuration
+$(call inherit-product, vendor/pure/configs/pure_phone.mk)
+
+# Device identifier. This must come after all inclusions
+PRODUCT_DEVICE := axon7
+PRODUCT_NAME := aosp_axon7
+PRODUCT_BRAND := ZTE
+PRODUCT_MODEL := ZTE A2017U
+PRODUCT_MANUFACTURER := ZTE
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME="P996A01_N" \
+    BUILD_FINGERPRINT="ZTE/P996A01_N/ailsa_ii:7.0/NRD90M/20170128.052618:user/release-keys" \
+    PRIVATE_BUILD_DESC="P996A01_N-user 7.0 NRD90M 20170128.052618 release-keys"
