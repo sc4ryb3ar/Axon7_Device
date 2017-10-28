@@ -176,15 +176,15 @@ WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 DONT_DEXPREOPT_PREBUILTS := true
 
 # Recovery
-  TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
+  TARGET_RECOVERY_FSTAB := device/zte/axon7/rootdir/etc/fstab.qcom
   TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_axon7
-  TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)/releasetools
+  TARGET_RELEASETOOLS_EXTENSIONS := device/zte/axon7
 
 # Sensors
   USE_SENSOR_MULTI_HAL := true
 
 # Sepolicy (SeLinux)
-  BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
+  BOARD_SEPOLICY_DIRS += device/zte/axon7/sepolicy
   include device/qcom/sepolicy/sepolicy.mk
 
 # TWRP

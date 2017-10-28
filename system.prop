@@ -52,11 +52,11 @@ ro.product.first_api_level=23
 
 # Display
 ro.sf.lcd_density=640
-dalvik.vm.heapstartsize=8m \
-dalvik.vm.heapgrowthlimit=384m \
-dalvik.vm.heapsize=1024m \
-dalvik.vm.heaptargetutilization=0.75 \
-dalvik.vm.heapminfree=4m \
+dalvik.vm.heapstartsize=8m
+dalvik.vm.heapgrowthlimit=384m
+dalvik.vm.heapsize=1024m
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.heapminfree=4m
 dalvik.vm.heapmaxfree=16m
 debug.egl.hw=1
 debug.gralloc.enable_fb_ubwc=1
