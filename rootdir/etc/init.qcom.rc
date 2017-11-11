@@ -180,6 +180,11 @@ on post-fs-data
     #Create IOP  deamon related dirs
     mkdir /data/misc/iop 0770 root system
 
+    # copy prebuilt qcril.db files always
+    copy /system/vendor/qcril.db /data/misc/radio/qcril_prebuilt.db
+    chown radio radio /data/misc/radio/qcril_prebuilt.db
+    chmod 0660 /data/misc/radio/qcril_prebuilt.db
+
     # Mark the copy complete flag to not completed
     write /data/misc/radio/copy_complete 0
     chown radio radio /data/misc/radio/copy_complete

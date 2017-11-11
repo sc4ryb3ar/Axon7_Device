@@ -70,12 +70,12 @@
   BOARD_USE_64BITMEDIA := false
 
 # Some framework code requires this to enable BT
-BOARD_HAVE_BLUETOOTH := true
-BOARD_USES_WIPOWER := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/bluetooth
-BOARD_HAVE_BLUETOOTH_QCOM := true
-BOARD_HAS_QCA_BT_ROME := true
-WCNSS_FILTER_USES_SIBS := true
+ BOARD_HAVE_BLUETOOTH := true
+ BOARD_USES_WIPOWER := true
+ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/configs/bluetooth
+ BOARD_HAVE_BLUETOOTH_QCOM := true
+ BOARD_HAS_QCA_BT_ROME := true
+ WCNSS_FILTER_USES_SIBS := true
 
 # Boot animation
   TARGET_BOOTANIMATION_HALF_RES := true
@@ -141,7 +141,7 @@ WCNSS_FILTER_USES_SIBS := true
   TARGET_KERNEL_HEADER_ARCH := arm64
   TARGET_KERNEL_SOURCE := kernel/zte/msm8996
   TARGET_KERNEL_CONFIG := lineageos_axon7_defconfig
-  TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+  KERNEL_TOOLCHAIN_PREFIX :=$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.2/bin/aarch64-linux-android-
 
 # Keystore
   TARGET_PROVIDES_KEYMASTER := true
@@ -177,9 +177,8 @@ TARGET_USES_INTERACTION_BOOST := true
 # Qualcomm support
   BOARD_USES_QCOM_HARDWARE := true
   BOARD_USES_QC_TIME_SERVICES := true
-#  TARGET_RIL_VARIANT := caf
-   PROTOBUF_SUPPORTED := true
-   TARGET_USE_SDCLANG := true
+  TARGET_RIL_VARIANT := caf
+  TARGET_USE_SDCLANG := true
 
 # Recovery
   TARGET_RECOVERY_FSTAB := device/zte/axon7/rootdir/etc/fstab.qcom
