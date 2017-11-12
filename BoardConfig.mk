@@ -131,7 +131,7 @@
 
 # Kernel
   BOARD_KERNEL_BASE := 0x80000000
-  BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff 
+  BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
   BOARD_KERNEL_PAGESIZE := 4096
   BOARD_KERNEL_TAGS_OFFSET := 0x00000100
   BOARD_RAMDISK_OFFSET     := 0x01000000
@@ -141,7 +141,7 @@
   TARGET_KERNEL_HEADER_ARCH := arm64
   TARGET_KERNEL_SOURCE := kernel/zte/msm8996
   TARGET_KERNEL_CONFIG := lineageos_axon7_defconfig
-  KERNEL_TOOLCHAIN_PREFIX :=$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.2/bin/aarch64-linux-android-
+  KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.2/bin/aarch64-linux-android-
 
 # Keystore
   TARGET_PROVIDES_KEYMASTER := true
@@ -221,7 +221,7 @@ TARGET_USES_INTERACTION_BOOST := true
   WIFI_DRIVER_FW_PATH_P2P := "p2p"
   WPA_SUPPLICANT_VERSION := VER_0_8_X
 
-  # EAS 
+  # EAS
   ENABLE_CPUSETS := true
   ENABLE_SCHEDBOOST := true
 
