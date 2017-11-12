@@ -143,7 +143,7 @@
   TARGET_KERNEL_CONFIG := lineageos_axon7_defconfig
   #TARGET_USES_UNCOMPRESSED_KERNEL := false
   #TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-  KERNEL_TOOLCHAIN_PREFIX :=$(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.x/bin/aarch64-linux-android-
+  KERNEL_TOOLCHAIN_PREFIX := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-6.x/bin/aarch64-linux-android-
 
 # Keystore
   TARGET_PROVIDES_KEYMASTER := true
