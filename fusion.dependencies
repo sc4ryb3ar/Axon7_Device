@@ -1,7 +1,7 @@
 [
   {
-    "remote"      : "FusionDevices",
-    "repository"  : "FusionDevices/android_kernel_zte_msm8996",
+    "remote"      : "github",
+    "repository"  : "sc4ryb3ar/Axon7_Kernel",
     "target_path" : "kernel/zte/msm8996",
     "revision"    : "n-mr2"
   },
@@ -13,7 +13,7 @@
  },
  {
     "remote"      : "fusion",
-    "repository"  : "OctopusParty/proprietary_vendor_zte",
+    "repository"  : "sc4ryb3ar/Axon7_Vendor",
     "target_path" : "vendor/zte",
     "revision"    : "n-mr2"
  },
