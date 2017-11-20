@@ -34,9 +34,11 @@
   TARGET_2ND_CPU_ABI2 := armeabi
   TARGET_2ND_CPU_VARIANT := kryo
 
+  TARGET_USES_64_BIT_BINDER := true
+
   CLANG_FAST := true
   ENABLE_CPUSETS := true
-  TARGET_USES_64_BIT_BINDER := true
+  ENABLE_SCHEDBOOST := true
 
 # Assertions
   TARGET_OTA_ASSERT_DEVICE := ailsa_ii,axon7
@@ -72,13 +74,14 @@
 # Some framework code requires this to enable BT
  BOARD_HAVE_BLUETOOTH := true
  BOARD_USES_WIPOWER := true
- BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/axon7/configs/bluetooth
+ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/configs/bluetooth
  BOARD_HAVE_BLUETOOTH_QCOM := true
  BOARD_HAS_QCA_BT_ROME := true
  WCNSS_FILTER_USES_SIBS := true
 
 # Boot animation
-  TARGET_BOOTANIMATION_HALF_RES := true
+ TARGET_BOOTANIMATION_PRELOAD := true
+ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # BootLoader
   TARGET_BOOTLOADER_BOARD_NAME := ailsa_ii
@@ -97,15 +100,19 @@
 # Crypto
   TARGET_HW_DISK_ENCRYPTION := true
 
-# Dexopt
-  ifeq ($(HOST_OS),linux)
-    ifeq ($(TARGET_BUILD_VARIANT),user)
-      ifeq ($(WITH_DEXPREOPT),)
-        WITH_DEXPREOPT := true
-        WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
-      endif
-    endif
-  endif
+# Dex pre-opt: to speed up initial boot
+ifeq ($(HOST_OS),linux)
+ ifeq ($(WITH_DEXPREOPT),)
+  WITH_DEXPREOPT := true
+  WITH_DEXPREOPT_PIC := true
+  ifneq ($(TARGET_BUILD_VARIANT),user)
+   #Retain classes.dex in APK's for non-user builds
+	 DEX_PREOPT_DEFAULT := nostripping
+	endif
+ endif
+endif
+
+WITH_DEXPREOPT := true
 
 # Display
   MAX_EGL_CACHE_KEY_SIZE := 12*1024
@@ -156,22 +163,20 @@
   TARGET_USES_NQ_NFC := true
 
 # Partitions
-  BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
-  BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-  BOARD_CACHEIMAGE_PARTITION_SIZE := 838860800
-  BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
-  BOARD_SYSTEMIMAGE_PARTITION_SIZE := 6442450944
-  BOARD_USERDATAIMAGE_PARTITION_SIZE := 56276234240
   BOARD_FLASH_BLOCK_SIZE := 262144
   TARGET_USERIMAGES_USE_EXT4 := true
   TARGET_USERIMAGES_USE_F2FS := true
   BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-  BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := f2fs
+  BOARD_CACHEIMAGE_PARTITION_SIZE := 838860800
+  BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+  BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
+  BOARD_SYSTEMIMAGE_PARTITION_SIZE := 6442450944
+  BOARD_USERDATAIMAGE_PARTITION_SIZE := 56276234240
 
 # PowerHAL
-TARGET_POWERHAL_VARIANT := voxpopuli
-TARGET_USES_INTERACTION_BOOST := true
--include device/voxpopuli/sepolicy/sepolicy.mk
+  TARGET_POWERHAL_VARIANT := voxpopuli
+  TARGET_USES_INTERACTION_BOOST := true
+  -include device/voxpopuli/sepolicy/sepolicy.mk
 
 # Properties
   TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
@@ -179,13 +184,12 @@ TARGET_USES_INTERACTION_BOOST := true
 # Qualcomm support
   BOARD_USES_QCOM_HARDWARE := true
   BOARD_USES_QC_TIME_SERVICES := true
-  TARGET_RIL_VARIANT := caf
-  TARGET_USE_SDCLANG := true
+  PROTOBUF_SUPPORTED := true
 
 # Recovery
-  TARGET_RECOVERY_FSTAB := device/zte/axon7/rootdir/etc/fstab.qcom
+  TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/etc/fstab.qcom
   TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_axon7
-  TARGET_RELEASETOOLS_EXTENSIONS := device/zte/axon7
+  TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)
 
 # Sensors
   USE_SENSOR_MULTI_HAL := true
@@ -197,7 +201,7 @@ TARGET_USES_INTERACTION_BOOST := true
 
 # TWRP
   TW_THEME := portrait_hdpi
-  BOARD_HAS_NO_REAL_SDCARD := true
+  #BOARD_HAS_NO_REAL_SDCARD := true
   RECOVERY_SDCARD_ON_DATA := true
   TARGET_RECOVERY_QCOM_RTC_FIX := true
   TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
@@ -222,10 +226,6 @@ TARGET_USES_INTERACTION_BOOST := true
   WIFI_DRIVER_FW_PATH_STA := "sta"
   WIFI_DRIVER_FW_PATH_P2P := "p2p"
   WPA_SUPPLICANT_VERSION := VER_0_8_X
-
-  # EAS
-  ENABLE_CPUSETS := true
-  ENABLE_SCHEDBOOST := true
 
 # inherit from the proprietary version
   -include vendor/zte/axon7/BoardConfigVendor.mk
