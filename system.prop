@@ -1,4 +1,8 @@
-# Audio
+# ADB During Boot
+persist.service.adb.enable=1                                                    
+persist.service.debuggable=1
+
+#Audio
 af.fast_track_multiplier=1
 audio.deep_buffer.media=true
 audio.dolby.ds2.enabled=false
